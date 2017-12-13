@@ -11,7 +11,7 @@ def repeating_key_xor(plaintext, key):
 			encoding = '0' + encoding 
 		output.append(encoding)
 		i += 1
-		if i == 3:
+		if i == len(key):
 			i = 0
 	output = ''.join(output)
 	return output
