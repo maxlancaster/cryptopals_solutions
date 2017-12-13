@@ -1,11 +1,9 @@
 from Crypto.Cipher import AES
 
-unpad = lambda s: s[:-ord(s[len(s) - 1:])]
-
-# assumes text is already base64 decoded
+# assumes text is already decoded
 def decrypt_AES_ECB(text, key):
-    cipher = AES.new(key, AES.MODE_ECB)
-    return cipher.decrypt(text)
+	cipher = AES.new(key, AES.MODE_ECB)
+	return cipher.decrypt(text)
 
 def test():
 	input_file = open('7.txt', 'r').read()
