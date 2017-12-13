@@ -8,8 +8,7 @@ def score(str):
 			score += 1
 	return score
 
-def single_byte_xor_decipher(input):
-	decoded = input.decode("hex")
+def single_byte_xor_decipher(decoded):
 	results = []
 	for char in xrange(0,256):
 		xor_result = []
@@ -17,11 +16,12 @@ def single_byte_xor_decipher(input):
 			xor_result.append(chr(ord(s) ^ char)) # perform the xor
 		xor_result = ''.join(xor_result)
 		xor_score = score(xor_result) # score the xor
-		results.append((xor_result, xor_score)) 
-	return max(results, key=lambda x: x[1])[0] # pick the xor with the highest score
+		results.append((xor_result, xor_score, chr(char))) 
+	return max(results, key=lambda x: x[1])#[0] # pick the xor with the highest score
 
 def test():
 	hex_in = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736"
-	print single_byte_xor_decipher(hex_in)
+	decoded = hex_in.decode('hex')
+	print single_byte_xor_decipher(decoded)
 
 test()

@@ -4,7 +4,7 @@ def crack_singlechar_xor(file):
 	list_of_bests = []
 	for line in file:
 		line = line.strip()
-		list_of_bests.append(challenge_3.single_byte_xor_decipher(line))
+		list_of_bests.append(challenge_3.single_byte_xor_decipher(line.decode('hex'))[0])
 
 	score = 0
 	best = ''
