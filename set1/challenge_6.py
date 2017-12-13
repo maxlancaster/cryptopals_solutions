@@ -23,12 +23,20 @@ def break_repeating_key_xor(plaintext):
 		normalized = float(edit_distance)/(3*keysize)
 		normalized_edit_distances.append((keysize, normalized))
 	probable_keysizes = sorted(normalized_edit_distances, key=lambda x: x[1])[:3] # proceed with 3 smallest edit distances
-	print probable_keysizes
+	potential_keys = []
 	for keysize in probable_keysizes:
 		keysize = keysize[0]
-		chunks = [decoded[i:i+keysize] for i in range(0, len(decoded), keysize)]
-		transposed_chunks = [''.join(list(x)) for x in list(itertools.izip_longest(*chunks, fillvalue="0"))]
-		print ''.join([challenge_3.single_byte_xor_decipher(chunk)[2] for chunk in transposed_chunks])
+		chunks = [decoded[i:i+keysize] for i in range(0, len(decoded), keysize)] # split into chunks
+		transposed_chunks = [''.join(list(x)) for x in list(itertools.izip_longest(*chunks, fillvalue="0"))] # transpose chunks
+		key = ''
+		for chunk in transposed_chunks:
+			key += challenge_3.single_byte_xor_decipher(chunk)[2]
+		potential_keys.append(key)
+	correct_key = potential_keys[2] # determined by observing the output of potential_keys
+	print "the correct key is: ", correct_key, "\n"
+	print "***************** deciphered text *****************\n"
+	print challenge_5.repeating_key_xor(decoded, correct_key).decode('hex')
+	return correct_key
 
 def test():
 	input_file = open('6.txt', 'r').read()
